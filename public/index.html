@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Xyiezbypass</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: #090d16;
+      color: #f4f6ff;
+      font-family: Arial, sans-serif;
+    }
+    main {
+      width: 100%;
+      max-width: 430px;
+      padding: 25px;
+      border: 1px solid #29354a;
+      border-radius: 20px;
+      background: #111827;
+    }
+    h1 { margin-top: 0; }
+    p { color: #aebbd0; line-height: 1.5; }
+    input, button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+    input {
+      border: 1px solid #35445c;
+      background: #090d16;
+      color: white;
+    }
+    button {
+      border: 0;
+      background: #7c5cff;
+      color: white;
+      font-weight: bold;
+    }
+    #status { overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>⚡ Xyiezbypass</h1>
+    <p>Tempel tautan untuk memeriksa apakah tautan tersebut mengarah ke MediaFire.</p>
+    <form id="form">
+      <input id="url" type="url" placeholder="https://..." required>
+      <button type="submit">Periksa tautan</button>
+    </form>
+    <p id="status">Siap digunakan setelah backend diaktifkan.</p>
+  </main>
+  <script>
+    document.getElementById("form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const value = document.getElementById("url").value.trim();
+      const status = document.getElementById("status");
+      try {
+        const link = new URL(value);
+        if (link.protocol !== "https:" && link.protocol !== "http:") {
+          throw new Error();
+        }
+        if (link.hostname === "mediafire.com" ||
+            link.hostname.endsWith(".mediafire.com")) {
+          status.textContent = "Tautan MediaFire terdeteksi: " + link.href;
+        } else {
+          status.textContent = "Tautan valid, tetapi resolver SFL belum dipasang.";
+        }
+      } catch (_) {
+        status.textContent = "Masukkan tautan HTTP atau HTTPS yang valid.";
+      }
+    });
+  </script>
+</body>
+</html>
